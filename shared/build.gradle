@@ -1,0 +1,11 @@
+
+task aaa(){
+	println '【注意！】＜＜記号がないと、毎回呼ばれる（最初に？）'
+}
+
+task clean << {
+	println "クリーンタスク"
+}
+task run<< {
+	println "Runタスク"
+}
