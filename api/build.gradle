@@ -1,3 +1,7 @@
+
+description='これはAPIを作るためのプロジェクトです。'
+
+
 dependencies {
    // compile project(':shared')
 }
@@ -5,6 +9,7 @@ dependencies {
 task aaa(){
 	println 'これはAPIプロジェクトです'
 }
+
 
 task clean << {
 	println "クリーンタスク"
