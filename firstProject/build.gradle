@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 defaultTasks 'clean','run'
-println '直接書くと毎回呼ばれる'
+println 'これはFIｒｓTプロジェクトです。'
 
 repositories {
     mavenCentral()
@@ -59,9 +59,7 @@ task distribution<<{
 task release(dependsOn: 'distribution') <<{
 	println 'We release now'
 }
-task aaa(){
-	println '【注意！】＜＜記号がないと、毎回呼ばれる（最初に？）'
-}
+
 
 task clean << {
 	println "クリーンタスク"

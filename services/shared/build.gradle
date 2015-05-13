@@ -1,6 +1,6 @@
 
 task aaa(){
-	println '【注意！】＜＜記号がないと、毎回呼ばれる（最初に？）'
+	println 'これは、Service/Sharedです'
 }
 
 task clean << {

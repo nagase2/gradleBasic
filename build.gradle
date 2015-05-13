@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 defaultTasks 'clean','run'
-println '直接書くと毎回呼ばれる'
+println 'これは直下のプロジェクトです'
 
 repositories {
     mavenCentral()
@@ -11,71 +11,3 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
-
-//--------------------------------------
-task hello{
-  ext.greeting = 'こんにちわ'
- doLast{
-
-  println 'Hellxxxxlererrelllo'
-  }
-}
-task first (dependsOn:'upper')<< {
-	println 'first task des'
-}
-
-task upper << {
-	String str = 'nagase'
-	println 'this is '+ str
-	println 'upper ' + str.toUpperCase()
-
-}
-task count(dependsOn: hello)<< {
-	10.times{
-	println "this is $it times" 
-	}
-	println "I got value from hello $hello.greeting"
-}
-
-hello.doFirst{
-	println "this is hello.dofirst $greeting"
-}
-
-task loadfile << {
-	println 'start loadfile'
-    def files = file('../hajirest3/hajirest4').listFiles().sort()
-    files.each { File file ->
-        if (file.isFile()) {
-        	//ここでAntタスクを呼び出している。
-            ant.loadfile(srcFile: file, property: file.name)
-            println " *** $file.name ***"
-          // println "${ant.properties[file.name]}"
-        }
-    }
-}
-task distribution<<{
-	println "We build the zip with version=$version"
-}
-task release(dependsOn: 'distribution') <<{
-	println 'We release now'
-}
-task aaa(){
-	println '【注意！】＜＜記号がないと、毎回呼ばれる（最初に？）'
-}
-
-task clean << {
-	println "クリーンタスク"
-}
-task run<< {
-	println "Runタスク"
-}
-
-gradle.taskGraph.whenReady{
-	taskGraph ->
-	println 'ここで、タスクになにが含まれているかで、変数を指定'
-	if(taskGraph.hasTask(release)||taskGraph.hasTask(aaa)){
-		version ='1.0'
-	}else{
-		version = '1.0-SNAPSHOT'
-	}
-}

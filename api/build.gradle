@@ -1,16 +1,14 @@
 dependencies {
-    compile project(':shared')
+   // compile project(':shared')
 }
 
-task dist(type: Zip) {
-    dependsOn spiJar
-    from 'src/dist'
-    into('libs') {
-        from spiJar.archivePath
-        from configurations.runtime
-    }
+task aaa(){
+	println 'これはAPIプロジェクトです'
 }
 
-artifacts {
-   archives dist
+task clean << {
+	println "クリーンタスク"
+}
+task run<< {
+	println "Runタスク"
 }
