@@ -3,9 +3,7 @@ task aaa(){
 	println 'これはService／Webserviceです'
 }
 
-task clean << {
-	println "クリーンタスク"
-}
+
 task run<< {
 	println "Runタスク"
 }

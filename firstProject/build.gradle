@@ -1,14 +1,36 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'groovy' //Groovyを使うときは必要
+apply plugin: "sonar-runner" //sonarを使うときは必要
 
-defaultTasks 'clean','run'
-println 'これはFIｒｓTプロジェクトです。'
+defaultTasks 'run'
+
+//ant.importBuild 'build.xml'
+ant.importBuild('build.xml') { antTargetName ->
+    'a--' + antTargetName
+}
+//こうすると、Antにプロパティの値を渡すことも可能。
+ant.properties.demoProperty = "this is property value from gradle"
+//これは、build.xmlの値
+println ant.antProp
+
+println 'これはFIRSTプロジェクトです。'
+description = "これはFIRSTプロジェクトです"
 
 repositories {
     mavenCentral()
 }
 dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile 'org.codehaus.groovy:groovy-all:2.3.10'
     testCompile group: 'junit', name: 'junit', version: '4.+'
+    testCompile "org.codehaus.groovy:groovy:2.3.10"
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    // Include the results from the `test` task in all subprojects
+    reportOn subprojects*.test
 }
 
 
@@ -20,6 +42,12 @@ task hello{
   println 'Hellxxxxlererrelllo'
   }
 }
+
+task antHello << {
+    String greeting = 'hello from Ant'
+    ant.echo(message: greeting)
+}
+
 task first (dependsOn:'upper')<< {
 	println 'first task des'
 }
@@ -61,19 +89,27 @@ task release(dependsOn: 'distribution') <<{
 }
 
 
-task clean << {
-	println "クリーンタスク"
-}
+
 task run<< {
 	println "Runタスク"
 }
 
 gradle.taskGraph.whenReady{
 	taskGraph ->
-	println 'ここで、タスクになにが含まれているかで、変数を指定'
-	if(taskGraph.hasTask(release)||taskGraph.hasTask(aaa)){
+	//println 'ここで、タスクになにが含まれているかで、変数を指定'
+	if(taskGraph.hasTask(release)||taskGraph.hasTask(count)){
 		version ='1.0'
 	}else{
 		version = '1.0-SNAPSHOT'
 	}
 }
+
+task zip << {
+    ant.zip(destfile: 'archive.zip') {
+        fileset(dir: 'src') {
+            include(name: '**/**')
+            exclude(name: '**.java')
+        }
+    }
+}
+

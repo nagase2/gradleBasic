@@ -11,9 +11,7 @@ task aaa(){
 }
 
 
-task clean << {
-	println "クリーンタスク"
-}
+
 task run<< {
 	println "Runタスク"
 }

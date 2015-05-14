@@ -1,0 +1,8 @@
+<project>
+	<property name="antProp" value="a property defined in an Ant build"/>
+
+    <target name="hello">
+        <echo>Hello, from Ant, build.xml</echo>
+        <echo>property = ${demoProperty}</echo>
+    </target>
+</project>

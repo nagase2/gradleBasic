@@ -3,9 +3,7 @@ task aaa(){
 	println 'これは、Service/Sharedです'
 }
 
-task clean << {
-	println "クリーンタスク"
-}
+
 task run<< {
 	println "Runタスク"
 }
